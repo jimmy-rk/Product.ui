@@ -9,9 +9,9 @@
             <mat-select formControlName="productGroupNk">
                 <mat-option 
                 *ngFor="let group of productGroupList" 
-                [value]="group"
+                [value]="group.value"
                 >
-                    {{group}}
+                    {{group.text}}
                 </mat-option>
             </mat-select>
         </mat-form-field>

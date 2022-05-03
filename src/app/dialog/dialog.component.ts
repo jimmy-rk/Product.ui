@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validator, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../services/api.service';
 import { Product } from '../types/product';
+import { SelectListItem } from '../types/SelectListItem';
 
 @Component({
   selector: 'app-dialog',
@@ -10,7 +11,7 @@ import { Product } from '../types/product';
   styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent implements OnInit {
-  productGroupList : string[] = ['PHO', 'COM', 'TV'];
+  productGroupList : SelectListItem[] = [];
   productForm !: FormGroup
   actionBtn: string = 'Save';
 
@@ -36,8 +37,16 @@ export class DialogComponent implements OnInit {
       this.productForm.controls['price'].setValue(this.editData.price);
       this.productForm.controls['comments'].setValue(this.editData.comments);
     }
-
-
+    
+    this.api.getProductGroupTypes()
+              .subscribe({
+                next: (res) => {
+                  alert('product groups');
+                  console.log(res)
+                  this.productGroupList = res.data;
+                },
+                error: () => alert ('Error saving Product')
+              });
     
   }
 
